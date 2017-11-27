@@ -1,128 +1,80 @@
-/*#include "fillit.h"
-#include <stdio.h>
-int		ft_filelen(int i)
+#include "fillit.h"
+
+/*
+** displays a solution
+*/
+
+/*static void	puttab(char **tab)
 {
-	int		j;
-	char	pack;
+	int i;
 
-	j = 0;
-	while (read(i, &pack, 1) != '\0')
-	{
-		j++;
-	}
-	return (j);
-}
-
-char	*ft_copy(int i, int len)
-{
-	char	pack;
-	size_t	j;
-	char	*str;
-
-	str = (char*)malloc(len);
-	j = 0;
-	while (read(i, &pack, 1) != '\0')
-	{
-		str[j] = pack;
-		j++;
-	}
-	str[j] = '\0';
-	return (str);
-}
-
-char	**ft_argvcopy(char *argv)
-{
-	int		t;
-	char	*str;
-	int		len;
-	char	**mino;
-
-	t = open(argv, O_RDONLY);
-	len = ft_filelen(t);
-	close(t);
-	t = open(argv, O_RDONLY);
-	str = ft_copy(t, len);
-	mino = ft_strsplit(str, '\n');
-	close(t);
-	return (mino);
-}
-
-int		*ft_narray(char **str)
-{
-	size_t	i;
-	size_t	j;
-	size_t	k;
-	int		*array;
-
-	array = (int*)malloc(4 * 104);
-	k = 0;
 	i = 0;
-	j = 0;
-	while (str[i])
+	while (tab[i] != NULL)
 	{
-		if (str[i][j] == '#')
-			array[k++] = (((i % 4) + 1) * 10 + (j + 1));
-		if (j == 3)
-		{
-			i++;
-			j = 0;
-		}
-		else
-			j++;
+		ft_putstr(tab[i]);
+		ft_putchar('\n');
+		i++;
 	}
-	return (array);
+}*/
+
+/*
+** retrieves the size with float sqrt () and rounds it to the upper int
+*/
+
+static int	get_square_size(void)
+{
+	int		square_size;
+	float	float_nb;
+
+	float_nb = ft_sqrt((float)(ntet) * 4.0);
+	square_size = (int)float_nb;
+	if (square_size == float_nb)
+		return (square_size);
+	return (square_size);
 }
 
-int		main(int argc, char **argv)
-{
-	char	**clone;
-	int		**xyN;
+/*
+** free the array (from read_input)
+*/
 
-	if (argc == 2)
+/*void		free_tab(char **tab, int tab_size)
+{
+	int i;
+
+	i = 0;
+	while (i < tab_size)
 	{
-		clone = ft_argvcopy(argv[1]);
-		printf("%s\n", clone[1]);
-		xyN = ft_narray(clone);
-		printf("%d\n", xyN[7]);
-		printf("%d\n", ft_checker(xyN));
+		ft_strdel(&tab[i]);
+		i++;
 	}
-	return (0);
+	ft_strdel(tab);
 }*/
 
 int			main(int argc, char **argv)
 {
-	t_tetrimino *start;
+	t_tetr *start;
 	char		**tab;
 
 	start = NULL;
 	tab = NULL;
 	if (argc != 2)
 	{
-		ft_usage();
+		ft_putstr("usage: ./fillit [testfile]\n");
 		return (-1);
 	}
-	if ((tab = read_stdin(argv[1])) == NULL)
+	if ((tab = ft_read_input(argv[1])) == NULL)
 	{
-		ft_putendl("error");
+		ft_putstr("error\n");
 		return (-1);
 	}
-	if (check(tab) == 0)
+	if (ft_checker(tab) == 0)
 	{
-		ft_putendl("error");
-		free_tab(tab, g_nb_tetrimino + 1);
+		ft_putstr("error\n");
+		//free_tab(tab, ntet + 1);
 		return (-1);
 	}
-	start = splittab(tab);
-	free_tab(tab, g_nb_tetrimino + 1);
-	puttab(solve(start, get_square_size(), NULL));
+	start = ft_create_linkedlist(tab);
+	//free_tab(tab, ntet + 1);
+	//puttab(solve(start, get_square_size(), NULL));
 	return (0);
 }
-
-
-
-
-
-
-
-
-

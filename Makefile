@@ -6,7 +6,7 @@
 #    By: mbortnic <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/20 11:46:30 by mbortnic          #+#    #+#              #
-#    Updated: 2017/11/27 11:41:29 by mbortnic         ###   ########.fr        #
+#    Updated: 2017/11/27 15:43:50 by mbortnic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,27 +16,10 @@ CFLAGS = -c -Wall -Wextra -Werror -I.
 
 HEADER = fillit.h
 
-SRC = main.c \
-	  ft_putstr.c \
-	  ft_putchar.c \
-	  ft_tetr_numbr.c \
-	  ft_get_height.c \
-	  ft_get_width.c \
-	  ft_has_neighbour.c
-	#ft_dma_for_map.c \
-	  ft_memalloc.c \
-	  ft_alone_in_map.c \
-	  ft_height_tetr.c \
-	  ft_width_tetr.c \
-	  ft_read_file.c \
-	  ft_setting_up.c \
-	  ft_strsplit.c \
-	  ft_tetr_numbr.c \
-	  ft_validation.c \
-	  ft_putstr.c \
-	  ft_strsub.c \
-	  ft_strsplit.c \
-	  ft_right_format.c #
+SRC = ft_dma_for_map.c ft_get_height.c ft_get_width.c ft_has_neighbour.c \
+		ft_libf1.c ft_libf2.c ft_libf3.c ft_put_tetr.c ft_read_input.c \
+		ft_right_format.c ft_tetr_numbr.c ft_validation.c ft_create_linkedlist.c \
+		main.c
 
 OBJ = $(SRC:.c=.o)
 

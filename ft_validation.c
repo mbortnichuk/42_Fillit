@@ -6,14 +6,14 @@
 /*   By: mbortnic <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/21 17:11:38 by mbortnic          #+#    #+#             */
-/*   Updated: 2017/11/24 17:46:51 by mbortnic         ###   ########.fr       */
+/*   Updated: 2017/11/27 14:30:18 by mbortnic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
 /* check the number of each character */
-int		ft_checkc(char *str)
+static int		ft_checkc(char *str)
 {
 	int i;
 	int hash;
@@ -40,7 +40,7 @@ int		ft_checkc(char *str)
 	return (1);
 }
 /* check if string contains valid characters and \n */
-int		ft_checkl(char *str)
+static int		ft_checkl(char *str)
 {
 	int i;
 	int j;
@@ -66,7 +66,7 @@ int		ft_checkl(char *str)
 }
 
 /* check the shape of tetriminos */
-int		ft_checkform(char *str)
+static int		ft_checkform(char *str)
 {
 	int h;
 	int w;
