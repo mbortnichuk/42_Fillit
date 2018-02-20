@@ -3,111 +3,85 @@
 /*                                                        :::      ::::::::   */
 /*   ft_validation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mbortnic <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mrybak <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/21 17:11:38 by mbortnic          #+#    #+#             */
-/*   Updated: 2017/11/27 14:30:18 by mbortnic         ###   ########.fr       */
+/*   Created: 2017/12/01 18:00:56 by mrybak            #+#    #+#             */
+/*   Updated: 2017/12/01 18:45:06 by mbortnic         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-/* check the number of each character */
-static int		ft_checkc(char *str)
+int		ft_hash_connection(char *s)
 {
+	int sq;
 	int i;
-	int hash;
-	int dot;
-	int n;
 
+	sq = 0;
 	i = 0;
-	hash = 0;
-	dot = 0;
-	n = 0;
-	while (str[i] != '\0')
+	while (i < 20)
 	{
-		if (str[i] == '#')
-			hash++;
-		if (str[i] =='.')
-			dot++;
-		if (str[i] == '\n')
-			n++;
-		if(str[i] != '#' && str[i] != '.' && str[i] != '\n')
-			return(0);
-	}
-	if (hash != 4 || dot != 12 || n != 4)
-		return (0);
-	return (1);
-}
-/* check if string contains valid characters and \n */
-static int		ft_checkl(char *str)
-{
-	int i;
-	int j;
-	int k;
-
-	i = 0;
-	j = 0;
-	k = 4;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '#' || str[i] == '.')
-			j++;
-		if (j > 4)
-			return (0);
-		if (str[i] == '\n' && i == k)
+		if (s[i] == '#')
 		{
-			j = 0;
-			k += 5;
+			if ((i + 1) < 20 && s[i + 1] == '#')
+				sq++;
+			if ((i - 1) >= 0 && s[i - 1] == '#')
+				sq++;
+			if ((i + 5) < 20 && s[i + 5] == '#')
+				sq++;
+			if ((i - 5) >= 0 && s[i - 5] == '#')
+				sq++;
 		}
 		i++;
 	}
-	return (1);
+	return (sq == 6 || sq == 8);
 }
 
-/* check the shape of tetriminos */
-static int		ft_checkform(char *str)
+int		ft_check_valid(char *s)
 {
-	int h;
-	int w;
-	
-	h = ft_get_height(str);
-	w = ft_get_width(str);
-	if (ft_has_neighbour(str) == 0)
-		return (0);
-	if (h == 0 || w == 0)
-		return (0);
-	if (h == 2 && h == 2)
-		return (1);
-	else if (h == 2 && w == 3)
-		return (1);
-	else if (h == 3 && w == 2)
-		return (1);
-	else if (h == 1 && w == 4)
-		return (1);
-	else if (h == 4 && w == 1)
-		return(1);
-	else
-		return (0);
+	int i;
+	int sq;
+
+	sq = 0;
+	i = 0;
+	while (i < 20)
+	{
+		if (i % 5 < 4)
+		{
+			if (!(s[i] == '#' || s[i] == '.'))
+				return (1);
+			if (s[i] == '#' && ++sq > 4)
+				return (2);
+		}
+		else if (s[i] != '\n')
+		{
+			return (3);
+		}
+		i++;
+	}
+	if (!ft_hash_connection(s))
+		return (5);
+	return (0);
 }
 
-/* check the arr of tetriminos, tetr by tetr */
-int		ft_checker(char **str)
+void	ft_minmax_val(char *s, t_coord *min, t_coord *max)
 {
 	int i;
 
 	i = 0;
-	if (str[0] == NULL)
-		return (0);
-	while (i < ntet)
+	while (i < 20)
 	{
-		 if (ft_checkc(str[i]) != 1)
-			 return (0);
-		 if (ft_checkl(str[i]) != 1)
-			 return (0);
-		 if (ft_checkform(str[i]) != 1)
-			 return (0);
-		 i++;
+		if (s[i] == '#')
+		{
+			if (i / 5 < min->y)
+				min->y = i / 5;
+			if (i / 5 > max->y)
+				max->y = i / 5;
+			if (i % 5 < min->x)
+				min->x = i % 5;
+			if (i % 5 > max->x)
+				max->x = i % 5;
+		}
+		i++;
 	}
-	return (1);
 }

@@ -6,7 +6,7 @@
 #    By: mbortnic <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/20 11:46:30 by mbortnic          #+#    #+#              #
-#    Updated: 2017/12/01 18:44:43 by mbortnic         ###   ########.fr        #
+#    Updated: 2017/11/27 15:43:50 by mbortnic         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,10 @@ CFLAGS = -c -Wall -Wextra -Werror -I.
 
 HEADER = fillit.h
 
-SRC = ft_fillit.c ft_lib.c ft_lib2.c ft_lib3.c ft_main.c ft_validation.c ft_solve.c ft_freeitall.c ft_tetrcreation.c
+SRC = ft_dma_for_map.c ft_get_height.c ft_get_width.c ft_has_neighbour.c \
+		ft_libf1.c ft_libf2.c ft_libf3.c ft_put_tetr.c ft_read_input.c \
+		ft_right_format.c ft_tetr_numbr.c ft_validation.c ft_create_linkedlist.c \
+		main.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -30,7 +33,7 @@ $(NAME): $(OBJ)
 	gcc $(CFLAGS) -o $@ $<
 
 clean:
-	@ rm -f $(OBJ)
+	@ rm -f *.o
 	@ echo "\033[33;1mobj files are removed\033[0m"
 
 fclean: clean
